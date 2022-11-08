@@ -1,3 +1,4 @@
+import Home from 'home/Home';
 import NavBar from 'NavBar';
 import React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
@@ -26,7 +27,6 @@ const BackGround = styled.div`
 `;
 
 const Column = styled.main`
-	position: relative;
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
@@ -42,6 +42,7 @@ const App = () => {
 			<BackGround>
 				<Column>
 					<NavBar path={path} setPath={setPath} />
+					{path === 0 && <Home />}
 				</Column>
 			</BackGround>
 		</>
