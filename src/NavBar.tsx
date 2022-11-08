@@ -62,10 +62,6 @@ const NavButton = styled.a`
 	align-items: center;
 `;
 
-const Text = styled.span`
-	font-weight: 400;
-`;
-
 const LogoContainer = styled.div`
 	display: inline;
 	height: 100%;
