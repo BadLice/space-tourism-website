@@ -1,5 +1,58 @@
-import styled, { keyframes } from 'styled-components';
+import { useState } from 'react';
+import styled, { css, keyframes } from 'styled-components';
 import { Body, H1, H4, H5 } from 'Typography';
+
+const fadeIn = keyframes`
+	0% {
+		
+	opacity: 0;
+
+	}
+	100% {
+			opacity: 1;
+
+
+	}
+`;
+
+const showSlide = keyframes`
+	0% {
+		
+	transform: translateX(-10%);
+
+	}
+	100% {
+		transform: translateX(0%);
+
+	}
+`;
+
+const showGrowth = keyframes`
+	0% {
+		
+	transform: scale(0.8);
+
+	}
+	100% {
+		transform: scale(1);
+
+	}
+`;
+
+const bounce = keyframes`
+	0% {
+		outline: 88px solid rgba(255, 255, 255, 0.1);
+
+	}
+	50% {
+		outline: 120px solid rgba(255, 255, 255, 0.1);
+
+	}
+	100% {
+		outline: 88px solid rgba(255, 255, 255, 0.1);
+
+	}
+`;
 
 const Row = styled.div`
 	display: flex;
@@ -15,6 +68,7 @@ const HomeTextContainer = styled.div`
 	gap: 0%;
 	justify-content: center;
 	padding-left: 10%;
+	animation: ${showSlide} 1s ease-in-out, ${fadeIn} 1s ease-in-out;
 `;
 
 const Header = styled(H5)`
@@ -42,22 +96,7 @@ const ExploreContainer = styled.div`
 	padding-right: 12%;
 `;
 
-const bounce = keyframes`
-	0% {
-		outline: 88px solid rgba(255, 255, 255, 0.1);
-
-	}
-	50% {
-		outline: 120px solid rgba(255, 255, 255, 0.1);
-
-	}
-	100% {
-		outline: 88px solid rgba(255, 255, 255, 0.1);
-
-	}
-`;
-
-const ExploreButton = styled.button`
+const ExploreButton = styled.button<{ $animated: boolean }>`
 	width: 100%;
 	height: 100%;
 	max-width: 274px;
@@ -65,8 +104,15 @@ const ExploreButton = styled.button`
 	border-radius: 50%;
 	background-color: white;
 	border: none;
+	outline: 0px solid rgba(255, 255, 255, 0.1);
 	transition: outline 0.5s linear;
 	cursor: pointer;
+	animation: ${({ $animated }) =>
+		!$animated
+			? css`
+					${showGrowth} 1s ease-in-out, ${fadeIn} 1s ease-in-out
+			  `
+			: 'none'};
 
 	&:hover {
 		outline: 88px solid rgba(255, 255, 255, 0.1);
@@ -80,6 +126,8 @@ const ExploreText = styled(H4)`
 `;
 
 const Home = () => {
+	const [buttonAnimated, setButtonAnimated] = useState(false);
+
 	return (
 		<Row>
 			<HomeTextContainer>
@@ -92,7 +140,10 @@ const Home = () => {
 				</Subtitle>
 			</HomeTextContainer>
 			<ExploreContainer>
-				<ExploreButton>
+				<ExploreButton
+					$animated={buttonAnimated}
+					onAnimationEnd={() => setButtonAnimated(true)}
+				>
 					<ExploreText>Explore</ExploreText>
 				</ExploreButton>
 			</ExploreContainer>
