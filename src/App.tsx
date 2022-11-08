@@ -17,13 +17,14 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const BackGround = styled.div`
-	background-image: url('./assets/home/background-home-desktop.jpg');
+const BackGround = styled.div<{ $url: string }>`
+	background-image: url(${({ $url }) => $url});
 	height: 100%;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
 	margin: 0;
+	transition: all 1s linear;
 `;
 
 const Column = styled.main`
@@ -36,10 +37,17 @@ const Column = styled.main`
 const App = () => {
 	const [path, setPath] = React.useState(0);
 
+	const backgrounds = [
+		'./assets/home/background-home-desktop.jpg',
+		'./assets/destination/background-destination-desktop.jpg',
+		'./assets/crew/background-crew-desktop.jpg',
+		'./assets/technology/background-technology-desktop.jpg',
+	];
+
 	return (
 		<>
 			<GlobalStyle />
-			<BackGround>
+			<BackGround $url={backgrounds[path]}>
 				<Column>
 					<NavBar path={path} setPath={setPath} />
 					{path === 0 && <Home />}
