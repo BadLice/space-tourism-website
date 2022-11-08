@@ -1,5 +1,11 @@
-import styled from 'styled-components';
+import { useState } from 'react';
+import styled, { keyframes } from 'styled-components';
 import { Nav1, Nav2 } from 'Typography';
+
+type IndicatorProps = {
+	$currentPath: number;
+	$previousPath: number;
+};
 
 const Container = styled.div`
 	height: 15%;
@@ -10,11 +16,11 @@ const Container = styled.div`
 	padding-top: 40px;
 `;
 
-const List = styled.ul`
+const NavContainer = styled.div`
 	height: 100%;
 	width: 60%;
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	justify-content: left;
 	align-items: center;
 	background: rgba(255, 255, 255, 0.04);
@@ -22,7 +28,17 @@ const List = styled.ul`
 	padding-left: 5%;
 `;
 
-const Item = styled.li<{ $active?: boolean }>`
+const List = styled.ul`
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	align-items: center;
+	padding-left: 5%;
+`;
+
+const Item = styled.li`
 	display: flex;
 	justify-content: center;
 	align-content: center;
@@ -30,32 +46,43 @@ const Item = styled.li<{ $active?: boolean }>`
 	height: 100%;
 	width: 17%;
 	text-align: center;
-	border-bottom: 1px solid ${({ $active }) => ($active ? `white` : `transparent`)};
-	transition: border 0.5s ease-in-out;
 `;
 
-const FirstItem = styled(Item)`
-	margin-left: 5%;
-`;
-
-const SmallLine = styled.li`
-	display: inline;
-	width: 3%;
+const IndicatorContainer = styled.div`
 	height: 1px;
-	margin-left: -9.2%;
-	background: #ffffff;
-	mix-blend-mode: normal;
-	opacity: 0.25;
+	width: 100%;
+	padding-left: 5%;
+	align-self: flex-start;
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+`;
+
+const slide = ({ $currentPath, $previousPath }: IndicatorProps) => keyframes`
+	0%{
+		margin-left: ${$previousPath * 17}%; 
+	}
+	70% {
+		margin-left: ${$currentPath * 17 + ($previousPath > $currentPath ? -1 : 1)}%; 
+	}
+	90% {
+		margin-left: ${$currentPath * 17 + ($previousPath > $currentPath ? 1 : -1)}%; 
+	}
+	100%  {
+		margin-left: ${$currentPath * 17}%; 
+	}
+`;
+
+const Indicator = styled.div<IndicatorProps>`
+	height: 1px;
+	background-color: white;
+	width: 17%;
+	margin-left: ${({ $currentPath }) => $currentPath * 17}%;
+	animation: ${(props) => slide(props)} 0.2s ease-in;
 `;
 
 const NavButton = styled.a`
 	display: flex;
-	font-family: 'Barlow Condensed';
-	font-style: normal;
-	font-size: 16px;
-	line-height: 19px;
-	letter-spacing: 2.7px;
-	color: #ffffff;
 	text-decoration: none;
 	text-transform: uppercase;
 	justify-content: center;
@@ -63,6 +90,7 @@ const NavButton = styled.a`
 `;
 
 const LogoContainer = styled.div`
+	position: relative;
 	display: inline;
 	height: 100%;
 	width: 40%;
@@ -88,11 +116,14 @@ const Logo = styled.div`
 `;
 
 const Line = styled.div`
-	width: 100%;
+	position: absolute;
+	left: 30%;
+	width: 75%;
 	height: 1px;
 	background: #ffffff;
 	mix-blend-mode: normal;
 	opacity: 0.25;
+	z-index: 10;
 `;
 
 type NavBarProps = {
@@ -100,11 +131,12 @@ type NavBarProps = {
 	setPath: React.Dispatch<React.SetStateAction<number>>;
 };
 
-//TODO: better animation when changing path
-
 const NavBar = ({ path, setPath }: NavBarProps) => {
+	const [previousPath, setPreviousPath] = useState(0);
+
 	const handleClickNav = (e: React.MouseEvent<HTMLLIElement, MouseEvent>, p: number) => {
 		e.preventDefault();
+		setPreviousPath(path);
 		setPath(p);
 	};
 
@@ -116,33 +148,37 @@ const NavBar = ({ path, setPath }: NavBarProps) => {
 				</LogoWrapper>
 				<Line></Line>
 			</LogoContainer>
-			<List>
-				<SmallLine></SmallLine>
-				<FirstItem $active={path === 0} onClick={(e) => handleClickNav(e, 0)}>
-					<NavButton href='/'>
-						<Nav2>00</Nav2>
-						<Nav1>Home</Nav1>
-					</NavButton>
-				</FirstItem>
-				<Item $active={path === 1} onClick={(e) => handleClickNav(e, 1)}>
-					<NavButton href='/'>
-						<Nav2>01</Nav2>
-						<Nav1>Destination</Nav1>
-					</NavButton>
-				</Item>
-				<Item $active={path === 2} onClick={(e) => handleClickNav(e, 2)}>
-					<NavButton href='/'>
-						<Nav2>02</Nav2>
-						<Nav1>Crew</Nav1>
-					</NavButton>
-				</Item>
-				<Item $active={path === 3} onClick={(e) => handleClickNav(e, 3)}>
-					<NavButton href='/'>
-						<Nav2>03</Nav2>
-						<Nav1>Technology</Nav1>
-					</NavButton>
-				</Item>
-			</List>
+			<NavContainer>
+				<List>
+					<Item onClick={(e) => handleClickNav(e, 0)}>
+						<NavButton href='/'>
+							<Nav2>00</Nav2>
+							<Nav1>Home</Nav1>
+						</NavButton>
+					</Item>
+					<Item onClick={(e) => handleClickNav(e, 1)}>
+						<NavButton href='/'>
+							<Nav2>01</Nav2>
+							<Nav1>Destination</Nav1>
+						</NavButton>
+					</Item>
+					<Item onClick={(e) => handleClickNav(e, 2)}>
+						<NavButton href='/'>
+							<Nav2>02</Nav2>
+							<Nav1>Crew</Nav1>
+						</NavButton>
+					</Item>
+					<Item onClick={(e) => handleClickNav(e, 3)}>
+						<NavButton href='/'>
+							<Nav2>03</Nav2>
+							<Nav1>Technology</Nav1>
+						</NavButton>
+					</Item>
+				</List>
+				<IndicatorContainer>
+					<Indicator $currentPath={path} $previousPath={previousPath} />
+				</IndicatorContainer>
+			</NavContainer>
 		</Container>
 	);
 };
