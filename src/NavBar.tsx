@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Nav1, Nav2 } from 'Typography';
 
 const Container = styled.div`
 	height: 15%;
@@ -59,11 +60,6 @@ const NavButton = styled.a`
 	text-transform: uppercase;
 	justify-content: center;
 	align-items: center;
-`;
-
-const Index = styled.span`
-	width: 20%;
-	font-weight: 700;
 `;
 
 const Text = styled.span`
@@ -128,26 +124,26 @@ const NavBar = ({ path, setPath }: NavBarProps) => {
 				<SmallLine></SmallLine>
 				<FirstItem $active={path === 0} onClick={(e) => handleClickNav(e, 0)}>
 					<NavButton href='/'>
-						<Index>00</Index>
-						<Text>Home</Text>
+						<Nav2>00</Nav2>
+						<Nav1>Home</Nav1>
 					</NavButton>
 				</FirstItem>
 				<Item $active={path === 1} onClick={(e) => handleClickNav(e, 1)}>
 					<NavButton href='/'>
-						<Index>01</Index>
-						<Text>Destination</Text>
+						<Nav2>01</Nav2>
+						<Nav1>Destination</Nav1>
 					</NavButton>
 				</Item>
 				<Item $active={path === 2} onClick={(e) => handleClickNav(e, 2)}>
 					<NavButton href='/'>
-						<Index>02</Index>
-						<Text>Crew</Text>
+						<Nav2>02</Nav2>
+						<Nav1>Crew</Nav1>
 					</NavButton>
 				</Item>
 				<Item $active={path === 3} onClick={(e) => handleClickNav(e, 3)}>
 					<NavButton href='/'>
-						<Index>03</Index>
-						<Text>Technology</Text>
+						<Nav2>03</Nav2>
+						<Nav1>Technology</Nav1>
 					</NavButton>
 				</Item>
 			</List>
