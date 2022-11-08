@@ -40,6 +40,8 @@ const FlexBox = styled.main`
 	width: 100%;
 `;
 
+//TODO: create theme using design system
+
 const App = () => {
 	const [path, setPath] = React.useState(0);
 
