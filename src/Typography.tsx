@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const H1 = styled.h1`
+	margin: 0;
 	font-family: 'Bellefair';
 	font-style: normal;
 	font-weight: 400;
@@ -9,6 +10,7 @@ export const H1 = styled.h1`
 	color: #ffffff;
 `;
 export const H2 = styled.h2`
+	margin: 0;
 	font-family: 'Bellefair';
 	font-style: normal;
 	font-weight: 400;
@@ -16,7 +18,8 @@ export const H2 = styled.h2`
 	line-height: 115px;
 	color: #ffffff;
 `;
-export const H3 = styled.h2`
+export const H3 = styled.h3`
+	margin: 0;
 	font-family: 'Bellefair';
 	font-style: normal;
 	font-weight: 400;
@@ -25,7 +28,8 @@ export const H3 = styled.h2`
 	text-transform: uppercase;
 	color: #ffffff;
 `;
-export const H4 = styled.h2`
+export const H4 = styled.h4`
+	margin: 0;
 	font-family: 'Bellefair';
 	font-style: normal;
 	font-weight: 400;
@@ -34,14 +38,15 @@ export const H4 = styled.h2`
 	text-transform: uppercase;
 	color: #ffffff;
 `;
-export const H5 = styled.h2`
+export const H5 = styled.h5`
+	margin: 0;
 	font-family: 'Barlow Condensed';
 	font-style: normal;
 	font-weight: 400;
 	font-size: 28px;
 	line-height: 34px;
 	letter-spacing: 4.725px;
-	color: #d0d6f9;
+	color: #ffffff;
 `;
 export const S1 = styled.span`
 	font-family: 'Bellefair';
