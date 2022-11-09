@@ -1,4 +1,5 @@
 import data from 'data/data.json';
+import FadeContainer from 'FadeContainer';
 import Init from 'Init';
 import { useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
@@ -155,7 +156,7 @@ const Destination = () => {
 					/>
 				</TabsContainer>
 				{destinations.map((planet, i) => (
-					<InformationTextContainer key={i} $show={i === selected}>
+					<FadeContainer key={i} $show={i === selected}>
 						<Name>{planet.name}</Name>
 						<Description>{planet.description}</Description>
 						<Divider />
@@ -165,7 +166,7 @@ const Destination = () => {
 							<Data>{planet.distance}</Data>
 							<Data>{planet.travel}</Data>
 						</DataContainer>
-					</InformationTextContainer>
+					</FadeContainer>
 				))}
 			</InformationContainer>
 		</Row>
