@@ -1,58 +1,7 @@
+import { bounceCircleBorder, fadeIn, showGrowthCircle, showSlideLeft } from 'animations';
 import { useState } from 'react';
-import styled, { css, keyframes } from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Body, H1, H4, H5 } from 'Typography';
-
-const fadeIn = keyframes`
-	0% {
-		
-	opacity: 0;
-
-	}
-	100% {
-			opacity: 1;
-
-
-	}
-`;
-
-const showSlide = keyframes`
-	0% {
-		
-	transform: translateX(-10%);
-
-	}
-	100% {
-		transform: translateX(0%);
-
-	}
-`;
-
-const showGrowth = keyframes`
-	0% {
-		
-	transform: scale(0.8);
-
-	}
-	100% {
-		transform: scale(1);
-
-	}
-`;
-
-const bounce = keyframes`
-	0% {
-		outline: 88px solid rgba(255, 255, 255, 0.1);
-
-	}
-	50% {
-		outline: 120px solid rgba(255, 255, 255, 0.1);
-
-	}
-	100% {
-		outline: 88px solid rgba(255, 255, 255, 0.1);
-
-	}
-`;
 
 const Row = styled.div`
 	display: flex;
@@ -71,7 +20,7 @@ const HomeTextContainer = styled.div`
 	padding-left: 10%;
 	padding-top: 10%;
 	padding-bottom: 10%;
-	animation: ${showSlide} 1s ease-in-out, ${fadeIn} 1s ease-in-out;
+	animation: ${showSlideLeft} 1s ease-in-out, ${fadeIn} 1s ease-in-out;
 `;
 
 const Header = styled(H5)`
@@ -116,13 +65,13 @@ const ExploreButton = styled.button<{ $animated: boolean }>`
 	animation: ${({ $animated }) =>
 		!$animated
 			? css`
-					${showGrowth} 1s ease-in-out, ${fadeIn} 1s ease-in-out
+					${showGrowthCircle} 1s ease-in-out, ${fadeIn} 1s ease-in-out
 			  `
 			: 'none'};
 
 	&:hover {
 		outline: 88px solid rgba(255, 255, 255, 0.1);
-		animation: ${bounce} 2s ease-out infinite;
+		animation: ${bounceCircleBorder} 2s ease-out infinite;
 		animation-delay: 0.5s;
 	}
 `;
