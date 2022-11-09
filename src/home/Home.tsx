@@ -62,26 +62,32 @@ const Row = styled.div`
 `;
 
 const HomeTextContainer = styled.div`
+	width: 50%;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
-	width: 50%;
 	gap: 0%;
-	justify-content: center;
+	justify-content: flex-end;
 	padding-left: 10%;
+	padding-top: 10%;
+	padding-bottom: 10%;
 	animation: ${showSlide} 1s ease-in-out, ${fadeIn} 1s ease-in-out;
 `;
 
 const Header = styled(H5)`
 	max-width: 444px;
+	height: 10%;
+	color: #d0d6f9;
 `;
 
 const Title = styled(H1)`
 	max-width: 444px;
-	line-height: 3px;
+	height: 35%;
 `;
 
 const Subtitle = styled(Body)`
 	max-width: 444px;
+	color: #d0d6f9;
 `;
 
 const ExploreContainer = styled.div`
