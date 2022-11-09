@@ -1,3 +1,4 @@
+import { fadeIn, showSlideLeft } from 'animations';
 import data from 'data/data.json';
 import FadeContainer from 'FadeContainer';
 import FadeImage from 'FadeImage';
@@ -31,6 +32,7 @@ const ImageContainer = styled.div`
 	width: 100%;
 	display: flex;
 	flex-direction: row;
+	animation: ${showSlideLeft} 1s ease-in-out, ${fadeIn} 1s ease-in-out;
 `;
 
 const Image = styled(FadeImage)`

@@ -1,26 +1,38 @@
 import { keyframes } from 'styled-components';
 
+const showSlideBottom = keyframes`
+	0% {
+		transform: translateY(10%);
+	}
+	100% {
+		transform: translateY(0%);
+	}
+`;
+
+const showSlideTop = keyframes`
+	0% {
+		transform: translateY(-10%);
+	}
+	100% {
+		transform: translateY(0%);
+	}
+`;
+
 const showSlideLeft = keyframes`
 	0% {
-		
-	transform: translateX(-10%);
-
+		transform: translateX(-10%);
 	}
 	100% {
 		transform: translateX(0%);
-
 	}
 `;
 
 const showGrowthCircle = keyframes`
 	0% {
-		
-	transform: scale(0.8);
-
+		transform: scale(0.8);
 	}
 	100% {
 		transform: scale(1);
-
 	}
 `;
 
@@ -48,4 +60,11 @@ const bounceCircleBorder = keyframes`
 	}
 `;
 
-export { showSlideLeft, showGrowthCircle, fadeIn, bounceCircleBorder };
+export {
+	showSlideLeft,
+	showGrowthCircle,
+	fadeIn,
+	bounceCircleBorder,
+	showSlideTop,
+	showSlideBottom,
+};
