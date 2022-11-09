@@ -1,8 +1,9 @@
 import data from 'data/data.json';
 import FadeContainer from 'FadeContainer';
+import FadeImage from 'FadeImage';
 import Init from 'Init';
 import { useState } from 'react';
-import styled, { css, keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { Body, H2, S1, S2 } from 'Typography';
 import Tabs from './Tabs';
 
@@ -32,16 +33,11 @@ const ImageContainer = styled.div`
 	flex-direction: row;
 `;
 
-const Image = styled.div<{ $url: string }>`
-	background: url('${({ $url }) => $url}') no-repeat;
-	background-repeat: no-repeat;
-	background-size: contain;
-	background-position: center;
+const Image = styled(FadeImage)`
 	width: 100%;
 	height: auto;
 	max-width: 455px;
 	max-height: 455px;
-	transition: background-image 1s ease-in-out;
 `;
 
 const InformationContainer = styled.div`
@@ -59,46 +55,6 @@ const InformationContainer = styled.div`
 const TabsContainer = styled.div`
 	height: 10%;
 	width: 100%;
-`;
-
-const fadeIn = keyframes`
-	0% {
-	    display: none;
-	    opacity: 0;
-	}
-	100% {
-	    opacity: 1;
-	    display: flex;
-	}
-`;
-
-const fadeOut = keyframes`
-	0% {
-	    opacity: 1;
-	    display: flex;
-	}
-    100% {
-	    display: none;
-	    opacity: 0;
-	}
-`;
-
-const InformationTextContainer = styled.div<{ $show: boolean }>`
-	display: ${({ $show }) => ($show ? 'flex' : 'none')};
-	flex-direction: column;
-	width: 100%;
-	height: 100%;
-	justify-content: flex-start;
-	align-items: flex-start;
-	transition: display 1s ease-in-out;
-	${({ $show }) =>
-		$show
-			? css`
-					animation: ${fadeIn} 1s ease-in-out;
-			  `
-			: css`
-					animation: ${fadeOut} 1s ease-in-out;
-			  `}
 `;
 
 const Name = styled(H2)`
