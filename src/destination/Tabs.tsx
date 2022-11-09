@@ -4,8 +4,8 @@ import { Nav1 } from 'Typography';
 
 type TabsProps = {
 	data: Array<{ label: string }>;
-	path: number;
-	setPath: React.Dispatch<React.SetStateAction<number>>;
+	selected: number;
+	setSelected: React.Dispatch<React.SetStateAction<number>>;
 };
 
 type IndicatorProps = {
@@ -74,13 +74,13 @@ const NavButton = styled.a`
 	align-items: center;
 `;
 
-const Tabs = ({ data, path, setPath }: TabsProps) => {
-	const [previousPath, setPreviousPath] = useState(0);
+const Tabs = ({ data, selected, setSelected }: TabsProps) => {
+	const [previousSelected, setPreviousSelected] = useState(0);
 
 	const handleClickNav = (e: React.MouseEvent<HTMLLIElement, MouseEvent>, p: number) => {
 		e.preventDefault();
-		setPreviousPath(path);
-		setPath(p);
+		setPreviousSelected(selected);
+		setSelected(p);
 	};
 
 	return (
@@ -95,7 +95,7 @@ const Tabs = ({ data, path, setPath }: TabsProps) => {
 				))}
 			</List>
 			<IndicatorContainer>
-				<Indicator $currentPath={path} $previousPath={previousPath} />
+				<Indicator $currentPath={selected} $previousPath={previousSelected} />
 			</IndicatorContainer>
 		</>
 	);

@@ -109,8 +109,8 @@ const Destination = () => {
 				<TabsContainer>
 					<Tabs
 						data={destinations.map(({ name }) => ({ label: name }))}
-						path={selected}
-						setPath={setSelected}
+						selected={selected}
+						setSelected={setSelected}
 					/>
 				</TabsContainer>
 				{destinations.map((planet, i) => (
