@@ -23,18 +23,18 @@ const PlanetContainer = styled.div`
 	padding-left: 12%;
 `;
 
-const TutorialTextContainer = styled.div`
+const InitContainer = styled.div`
 	height: 10%;
 	width: 100%;
 	display: flex;
 	flex-direction: row;
 `;
 
-const TutorialText = styled(H5)`
+const InitText = styled(H5)`
 	width: 90%;
 `;
 
-const TutorialTextIndex = styled(H5)`
+const InitIndex = styled(H5)`
 	width: 10%;
 	color: #ffffff;
 	mix-blend-mode: normal;
@@ -42,14 +42,14 @@ const TutorialTextIndex = styled(H5)`
 	font-weight: 700;
 `;
 
-const PlanetImageContainer = styled.div`
+const ImageContainer = styled.div`
 	height: 90%;
 	width: 100%;
 	display: flex;
 	flex-direction: row;
 `;
 
-const PlanetImage = styled.div<{ $url: string }>`
+const Image = styled.div<{ $url: string }>`
 	background: url('${({ $url }) => $url}') no-repeat;
 	background-repeat: no-repeat;
 	background-size: contain;
@@ -100,7 +100,7 @@ const fadeOut = keyframes`
 	}
 `;
 
-const InnerInformationContainer = styled.div<{ $show: boolean }>`
+const InformationTextContainer = styled.div<{ $show: boolean }>`
 	display: ${({ $show }) => ($show ? 'flex' : 'none')};
 	flex-direction: column;
 	width: 100%;
@@ -118,7 +118,7 @@ const InnerInformationContainer = styled.div<{ $show: boolean }>`
 			  `}
 `;
 
-const PlanetName = styled(H2)`
+const Name = styled(H2)`
 	text-transform: uppercase;
 	padding-top: 10%;
 	height: 35%;
@@ -159,13 +159,13 @@ const Destination = () => {
 	return (
 		<Row>
 			<PlanetContainer>
-				<TutorialTextContainer>
-					<TutorialTextIndex>01</TutorialTextIndex>
-					<TutorialText>PICK YOUR DESTINATION</TutorialText>
-				</TutorialTextContainer>
-				<PlanetImageContainer>
-					<PlanetImage $url={planet.images.png} />
-				</PlanetImageContainer>
+				<InitContainer>
+					<InitIndex>01</InitIndex>
+					<InitText>PICK YOUR DESTINATION</InitText>
+				</InitContainer>
+				<ImageContainer>
+					<Image $url={planet.images.png} />
+				</ImageContainer>
 			</PlanetContainer>
 			<InformationContainer>
 				<TabsContainer>
@@ -176,8 +176,8 @@ const Destination = () => {
 					/>
 				</TabsContainer>
 				{destinations.map((planet, i) => (
-					<InnerInformationContainer key={i} $show={i === selected}>
-						<PlanetName>{planet.name}</PlanetName>
+					<InformationTextContainer key={i} $show={i === selected}>
+						<Name>{planet.name}</Name>
 						<Description>{planet.description}</Description>
 						<Divider />
 						<DataContainer>
@@ -186,7 +186,7 @@ const Destination = () => {
 							<Data>{planet.distance}</Data>
 							<Data>{planet.travel}</Data>
 						</DataContainer>
-					</InnerInformationContainer>
+					</InformationTextContainer>
 				))}
 			</InformationContainer>
 		</Row>
