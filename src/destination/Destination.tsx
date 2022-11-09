@@ -1,7 +1,8 @@
 import data from 'data/data.json';
+import Init from 'Init';
 import { useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import { Body, H2, H5, S1, S2 } from 'Typography';
+import { Body, H2, S1, S2 } from 'Typography';
 import Tabs from './Tabs';
 
 const Row = styled.div`
@@ -21,25 +22,6 @@ const PlanetContainer = styled.div`
 	align-items: flex-end;
 	padding-bottom: 10%;
 	padding-left: 12%;
-`;
-
-const InitContainer = styled.div`
-	height: 10%;
-	width: 100%;
-	display: flex;
-	flex-direction: row;
-`;
-
-const InitText = styled(H5)`
-	width: 90%;
-`;
-
-const InitIndex = styled(H5)`
-	width: 10%;
-	color: #ffffff;
-	mix-blend-mode: normal;
-	opacity: 0.25;
-	font-weight: 700;
 `;
 
 const ImageContainer = styled.div`
@@ -159,10 +141,7 @@ const Destination = () => {
 	return (
 		<Row>
 			<PlanetContainer>
-				<InitContainer>
-					<InitIndex>01</InitIndex>
-					<InitText>PICK YOUR DESTINATION</InitText>
-				</InitContainer>
+				<Init index='01' text='pick your destination' />
 				<ImageContainer>
 					<Image $url={planet.images.png} />
 				</ImageContainer>
