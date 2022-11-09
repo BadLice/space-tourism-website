@@ -27,6 +27,15 @@ const showSlideLeft = keyframes`
 	}
 `;
 
+const showSlideRight = keyframes`
+	0% {
+		transform: translateX(10%);
+	}
+	100% {
+		transform: translateX(0%);
+	}
+`;
+
 const showGrowthCircle = keyframes`
 	0% {
 		transform: scale(0.8);
@@ -67,4 +76,5 @@ export {
 	bounceCircleBorder,
 	showSlideTop,
 	showSlideBottom,
+	showSlideRight,
 };

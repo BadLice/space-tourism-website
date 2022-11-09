@@ -1,3 +1,4 @@
+import { fadeIn, showSlideBottom } from 'animations';
 import styled from 'styled-components';
 import { H5 } from 'Typography';
 
@@ -6,6 +7,7 @@ const Container = styled.div`
 	width: 100%;
 	display: flex;
 	flex-direction: row;
+	animation: ${showSlideBottom} 1s ease-in-out, ${fadeIn} 1s ease-in-out;
 `;
 
 const Text = styled(H5)`

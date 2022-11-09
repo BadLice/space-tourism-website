@@ -5,7 +5,6 @@ const FadeImage = styled.div<{ $url: string }>`
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: center;
-
 	transition: background-image 1s ease-in-out;
 `;
 
