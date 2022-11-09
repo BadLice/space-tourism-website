@@ -1,3 +1,4 @@
+import Destination from 'destination/Destination';
 import Home from 'home/Home';
 import NavBar from 'NavBar';
 import React from 'react';
@@ -51,6 +52,7 @@ const App = () => {
 				<Column>
 					<NavBar path={path} setPath={setPath} />
 					{path === 0 && <Home />}
+					{path === 1 && <Destination />}
 				</Column>
 			</BackGround>
 		</>
