@@ -6,7 +6,7 @@ import Init from 'Init';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Body, H3, H4 } from 'Typography';
-import Slider from './Slider';
+import Slider from '../Slider';
 
 const Row = styled.div`
 	display: flex;
@@ -95,6 +95,8 @@ const Crew = () => {
 					</FadeContainer>
 				))}
 				<Slider
+					orientation='horizontal'
+					size='small'
 					elements={crew.length}
 					selected={selected}
 					setSelected={setSelected}
@@ -105,7 +107,7 @@ const Crew = () => {
 			<PersonContainer>
 				{crew.map((person, i) => (
 					<ImageContainer key={i} $show={i === selected}>
-						<Image $url={crew[selected].images.png} />
+						<Image $url={person.images.png} />
 					</ImageContainer>
 				))}
 			</PersonContainer>
