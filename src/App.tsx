@@ -4,6 +4,7 @@ import Home from 'home/Home';
 import NavBar from 'NavBar';
 import React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
+import Technology from 'technology/Technology';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -55,6 +56,7 @@ const App = () => {
 					{path === 0 && <Home />}
 					{path === 1 && <Destination />}
 					{path === 2 && <Crew />}
+					{path === 3 && <Technology />}
 				</Column>
 			</BackGround>
 		</>
