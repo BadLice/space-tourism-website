@@ -37,6 +37,10 @@ const Column = styled.main`
 	width: 100%;
 `;
 
+//TODO: responsive
+//TODO: preload ALL images on page load
+//TODO: store path in session storage
+
 const App = () => {
 	const [path, setPath] = React.useState(0);
 
