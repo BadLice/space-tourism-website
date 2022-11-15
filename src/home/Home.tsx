@@ -8,6 +8,12 @@ const Row = styled.div`
 	flex-direction: row;
 	align-items: center;
 	height: 85%;
+
+	@media only screen and (max-width: 768px) and (max-width: 375px) {
+		body {
+			flex-direction: column;
+		}
+	}
 `;
 
 const HomeTextContainer = styled.div`
@@ -80,8 +86,16 @@ const ExploreText = styled(H4)`
 	color: #0b0d17;
 `;
 
-const Home = () => {
+type HomeProps = {
+	setPath: React.Dispatch<React.SetStateAction<number>>;
+};
+
+const Home = ({ setPath }: HomeProps) => {
 	const [buttonAnimated, setButtonAnimated] = useState(false);
+
+	const goToDestination = () => {
+		setPath(1);
+	};
 
 	return (
 		<Row>
@@ -98,6 +112,7 @@ const Home = () => {
 				<ExploreButton
 					$animated={buttonAnimated}
 					onAnimationEnd={() => setButtonAnimated(true)}
+					onClick={goToDestination}
 				>
 					<ExploreText>Explore</ExploreText>
 				</ExploreButton>

@@ -9,6 +9,11 @@ const Container = styled.div`
 	justify-content: left;
 	align-items: center;
 	padding-top: 40px;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		padding-top: 0px;
+		height: 10%;
+	}
 `;
 
 type NavBarProps = {

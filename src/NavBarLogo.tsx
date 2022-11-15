@@ -8,6 +8,11 @@ const LogoContainer = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		width: 33%;
+		padding-left: 5%;
+	}
 `;
 
 const LogoWrapper = styled.div`
@@ -35,6 +40,10 @@ const Line = styled.div`
 	mix-blend-mode: normal;
 	opacity: 0.25;
 	z-index: 10;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		display: none;
+	}
 `;
 
 const NavBarLogo = () => {

@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Nav1, Nav2 } from 'Typography';
+import useMediaQuery from 'useMediaQuery';
 
 type IndicatorProps = {
 	$currentPath: number;
 	$previousPath: number;
+	$size: number;
 };
 
 const Container = styled.div`
@@ -17,6 +19,10 @@ const Container = styled.div`
 	background: rgba(255, 255, 255, 0.04);
 	backdrop-filter: blur(40.7742px);
 	padding-left: 5%;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		width: 67%;
+	}
 `;
 
 const List = styled.ul`
@@ -27,16 +33,25 @@ const List = styled.ul`
 	justify-content: left;
 	align-items: center;
 	padding-left: 5%;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		padding-left: 0;
+	}
 `;
 
 const Item = styled.li`
 	display: flex;
 	justify-content: center;
-	align-content: center;
 	flex-direction: column;
 	height: 100%;
 	width: 17%;
 	text-align: center;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		width: 25%;
+		text-align: left;
+		align-items: left;
+	}
 `;
 
 const IndicatorContainer = styled.div`
@@ -47,29 +62,37 @@ const IndicatorContainer = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: left;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		padding-left: 0%;
+	}
 `;
 
-const slide = ({ $currentPath, $previousPath }: IndicatorProps) => keyframes`
+const slide = ({ $currentPath, $previousPath, $size }: IndicatorProps) => keyframes`
 	0%{
-		margin-left: ${$previousPath * 17}%; 
+		margin-left: ${$previousPath * $size}%; 
 	}
 	70% {
-		margin-left: ${$currentPath * 17 + ($previousPath > $currentPath ? -1 : 1)}%; 
+		margin-left: ${$currentPath * $size + ($previousPath > $currentPath ? -1 : 1)}%; 
 	}
 	90% {
-		margin-left: ${$currentPath * 17 + ($previousPath > $currentPath ? 1 : -1)}%; 
+		margin-left: ${$currentPath * $size + ($previousPath > $currentPath ? 1 : -1)}%; 
 	}
 	100%  {
-		margin-left: ${$currentPath * 17}%; 
+		margin-left: ${$currentPath * $size}%; 
 	}
 `;
 
 const Indicator = styled.div<IndicatorProps>`
 	height: 1px;
 	background-color: white;
-	width: 17%;
-	margin-left: ${({ $currentPath }) => $currentPath * 17}%;
+	width: ${({ $size }) => $size}%;
+	margin-left: ${({ $currentPath, $size }) => $currentPath * $size}%;
 	animation: ${(props) => slide(props)} 0.2s ease-in;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		height: 3px;
+	}
 `;
 
 const NavButton = styled.a`
@@ -80,6 +103,20 @@ const NavButton = styled.a`
 	align-items: center;
 `;
 
+const Index = styled(Nav2)`
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		display: none;
+	}
+`;
+
+const Label = styled(Nav1)`
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		font-size: 14px;
+		line-height: 17px;
+		letter-spacing: 2.3625px;
+	}
+`;
+
 type NavBarButtonsProps = {
 	path: number;
 	setPath: React.Dispatch<React.SetStateAction<number>>;
@@ -87,6 +124,10 @@ type NavBarButtonsProps = {
 
 const NavBarButtons = ({ path, setPath }: NavBarButtonsProps) => {
 	const [previousPath, setPreviousPath] = useState(0);
+
+	const isTablet = useMediaQuery('(max-width: 768px)');
+
+	let indicatorSize = isTablet ? 25 : 17;
 
 	const handleClickNav = (e: React.MouseEvent<HTMLLIElement, MouseEvent>, p: number) => {
 		e.preventDefault();
@@ -99,31 +140,35 @@ const NavBarButtons = ({ path, setPath }: NavBarButtonsProps) => {
 			<List>
 				<Item onClick={(e) => handleClickNav(e, 0)}>
 					<NavButton href='/'>
-						<Nav2>00</Nav2>
-						<Nav1>Home</Nav1>
+						<Index>00</Index>
+						<Label>Home</Label>
 					</NavButton>
 				</Item>
 				<Item onClick={(e) => handleClickNav(e, 1)}>
 					<NavButton href='/'>
-						<Nav2>01</Nav2>
-						<Nav1>Destination</Nav1>
+						<Index>01</Index>
+						<Label>Destination</Label>
 					</NavButton>
 				</Item>
 				<Item onClick={(e) => handleClickNav(e, 2)}>
 					<NavButton href='/'>
-						<Nav2>02</Nav2>
-						<Nav1>Crew</Nav1>
+						<Index>02</Index>
+						<Label>Crew</Label>
 					</NavButton>
 				</Item>
 				<Item onClick={(e) => handleClickNav(e, 3)}>
 					<NavButton href='/'>
-						<Nav2>03</Nav2>
-						<Nav1>Technology</Nav1>
+						<Index>03</Index>
+						<Label>Technology</Label>
 					</NavButton>
 				</Item>
 			</List>
 			<IndicatorContainer>
-				<Indicator $currentPath={path} $previousPath={previousPath} />
+				<Indicator
+					$currentPath={path}
+					$previousPath={previousPath}
+					$size={indicatorSize}
+				/>
 			</IndicatorContainer>
 		</Container>
 	);
