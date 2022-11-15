@@ -6,7 +6,14 @@ import React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import Technology from 'technology/Technology';
 
-const GlobalStyle = createGlobalStyle`
+const backgrounds = [
+	'./assets/home/background-home-desktop.jpg',
+	'./assets/destination/background-destination-desktop.jpg',
+	'./assets/crew/background-crew-desktop.jpg',
+	'./assets/technology/background-technology-desktop.jpg',
+];
+
+const GlobalStyle = createGlobalStyle<{ $imgUrls: Array<string> }>`
   * {
     box-sizing: border-box;
   }
@@ -18,6 +25,13 @@ const GlobalStyle = createGlobalStyle`
 	height: 100%;
 	overflow: hidden;
   }
+
+  /* used to preload images before rendering */
+  body::after{
+   position:absolute; width:0; height:0; overflow:hidden; z-index:-1; // hide images
+   content:${({ $imgUrls }) =>
+		$imgUrls.map((path) => `url(${path})`).join(' ')};   // load images
+}
 `;
 
 const BackGround = styled.div<{ $url: string }>`
@@ -38,22 +52,14 @@ const Column = styled.main`
 `;
 
 //TODO: responsive
-//TODO: preload ALL images on page load
 //TODO: store path in session storage
 
 const App = () => {
 	const [path, setPath] = React.useState(0);
 
-	const backgrounds = [
-		'./assets/home/background-home-desktop.jpg',
-		'./assets/destination/background-destination-desktop.jpg',
-		'./assets/crew/background-crew-desktop.jpg',
-		'./assets/technology/background-technology-desktop.jpg',
-	];
-
 	return (
 		<>
-			<GlobalStyle />
+			<GlobalStyle $imgUrls={backgrounds} />
 			<BackGround $url={backgrounds[path]}>
 				<Column>
 					<NavBar path={path} setPath={setPath} />
