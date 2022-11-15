@@ -57,9 +57,7 @@ const App = () => {
 	const [path, setPath] = useState(Number(sessionStorage.getItem('path')) || 0);
 
 	useEffect(() => {
-		if (path) {
-			sessionStorage.setItem('path', '' + path);
-		}
+		sessionStorage.setItem('path', '' + path);
 	}, [path]);
 
 	return (
@@ -68,7 +66,7 @@ const App = () => {
 			<BackGround $url={backgrounds[path]}>
 				<Column>
 					<NavBar path={path} setPath={setPath} />
-					{path === 0 && <Home />}
+					{path === 0 && <Home setPath={setPath} />}
 					{path === 1 && <Destination />}
 					{path === 2 && <Crew />}
 					{path === 3 && <Technology />}
