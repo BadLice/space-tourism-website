@@ -2,7 +2,7 @@ import Crew from 'crew/Crew';
 import Destination from 'destination/Destination';
 import Home from 'home/Home';
 import NavBar from 'NavBar';
-import React from 'react';
+import { useEffect, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import Technology from 'technology/Technology';
 
@@ -52,10 +52,15 @@ const Column = styled.main`
 `;
 
 //TODO: responsive
-//TODO: store path in session storage
 
 const App = () => {
-	const [path, setPath] = React.useState(0);
+	const [path, setPath] = useState(Number(sessionStorage.getItem('path')) || 0);
+
+	useEffect(() => {
+		if (path) {
+			sessionStorage.setItem('path', '' + path);
+		}
+	}, [path]);
 
 	return (
 		<>
