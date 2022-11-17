@@ -16,5 +16,8 @@ export const getBackgroundsList = () =>
 		[]
 	);
 
-export const getCurrentBackground = (path: number, isTablet: boolean) =>
-	backgrounds[path].replace('<screen>', isTablet ? 'tablet' : 'desktop');
+export const getCurrentBackground = (path: number, isTablet: boolean, isMobile: boolean) =>
+	backgrounds[path].replace(
+		'<screen>',
+		isTablet ? 'tablet' : isMobile ? 'mobile' : 'desktop'
+	);

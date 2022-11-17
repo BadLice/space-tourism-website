@@ -9,6 +9,45 @@ type IndicatorProps = {
 	$size: number;
 };
 
+const FixedContainer = styled.div<{ $open: boolean }>`
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	height: 100vh;
+	width: 70%;
+	background: rgba(255, 255, 255, 0.04);
+	backdrop-filter: blur(40.7742px);
+	z-index: 10;
+	display: ${({ $open }) => ($open ? 'flex' : 'none')};
+`;
+
+const FixedList = styled.ul`
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	padding-left: 15%;
+	padding-top: 40%;
+	gap: 3%;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		padding-left: 0;
+	}
+`;
+
+const FixedItem = styled.li`
+	display: grid;
+	flex-direction: row;
+	height: 7%;
+	width: 100%;
+	text-align: left;
+
+	& > a {
+		justify-content: flex-start;
+		align-items: flex-start;
+	}
+`;
+
 const Container = styled.div`
 	height: 100%;
 	width: 60%;
@@ -120,12 +159,14 @@ const Label = styled(Nav1)`
 type NavBarButtonsProps = {
 	path: number;
 	setPath: React.Dispatch<React.SetStateAction<number>>;
+	isOpen?: boolean;
 };
 
-const NavBarButtons = ({ path, setPath }: NavBarButtonsProps) => {
+const NavBarButtons = ({ path, setPath, isOpen }: NavBarButtonsProps) => {
 	const [previousPath, setPreviousPath] = useState(0);
 
 	const isTablet = useMediaQuery('(max-width: 768px)');
+	const isMobile = useMediaQuery('(max-width: 375px)');
 
 	let indicatorSize = isTablet ? 25 : 17;
 
@@ -135,42 +176,45 @@ const NavBarButtons = ({ path, setPath }: NavBarButtonsProps) => {
 		setPath(p);
 	};
 
+	const navItems = ['Home', 'Destination', 'Crew', 'Technology'];
+
 	return (
-		<Container>
-			<List>
-				<Item onClick={(e) => handleClickNav(e, 0)}>
-					<NavButton href='/'>
-						<Index>00</Index>
-						<Label>Home</Label>
-					</NavButton>
-				</Item>
-				<Item onClick={(e) => handleClickNav(e, 1)}>
-					<NavButton href='/'>
-						<Index>01</Index>
-						<Label>Destination</Label>
-					</NavButton>
-				</Item>
-				<Item onClick={(e) => handleClickNav(e, 2)}>
-					<NavButton href='/'>
-						<Index>02</Index>
-						<Label>Crew</Label>
-					</NavButton>
-				</Item>
-				<Item onClick={(e) => handleClickNav(e, 3)}>
-					<NavButton href='/'>
-						<Index>03</Index>
-						<Label>Technology</Label>
-					</NavButton>
-				</Item>
-			</List>
-			<IndicatorContainer>
-				<Indicator
-					$currentPath={path}
-					$previousPath={previousPath}
-					$size={indicatorSize}
-				/>
-			</IndicatorContainer>
-		</Container>
+		<>
+			{isMobile ? (
+				<FixedContainer $open={isOpen!}>
+					<FixedList>
+						{navItems.map((text, i) => (
+							<FixedItem key={i} onClick={(e) => handleClickNav(e, i)}>
+								<NavButton href='/'>
+									<Index>0{i}</Index>
+									<Label>{text}</Label>
+								</NavButton>
+							</FixedItem>
+						))}
+					</FixedList>
+				</FixedContainer>
+			) : (
+				<Container>
+					<List>
+						{navItems.map((text, i) => (
+							<Item key={i} onClick={(e) => handleClickNav(e, i)}>
+								<NavButton href='/'>
+									<Index>0{i}</Index>
+									<Label>{text}</Label>
+								</NavButton>
+							</Item>
+						))}
+					</List>
+					<IndicatorContainer>
+						<Indicator
+							$currentPath={path}
+							$previousPath={previousPath}
+							$size={indicatorSize}
+						/>
+					</IndicatorContainer>
+				</Container>
+			)}
+		</>
 	);
 };
 

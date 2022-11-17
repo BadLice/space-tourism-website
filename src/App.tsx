@@ -47,7 +47,7 @@ const BackGround = styled.div<{ $url: string }>`
 	transition: all 1s linear;
 `;
 
-const Column = styled.main`
+const Container = styled.main`
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
@@ -65,6 +65,7 @@ const Column = styled.main`
 const App = () => {
 	const [path, setPath] = useState(Number(sessionStorage.getItem('path')) || 0);
 	const isTablet = useMediaQuery('(max-width: 768px)');
+	const isMobile = useMediaQuery('(max-width: 375px)');
 
 	useEffect(() => {
 		sessionStorage.setItem('path', '' + path);
@@ -73,14 +74,14 @@ const App = () => {
 	return (
 		<>
 			<GlobalStyle $imgUrls={getBackgroundsList()} />
-			<BackGround $url={getCurrentBackground(path, isTablet)}>
-				<Column>
+			<BackGround $url={getCurrentBackground(path, isTablet, isMobile)}>
+				<Container>
 					<NavBar path={path} setPath={setPath} />
 					{path === 0 && <Home setPath={setPath} />}
 					{path === 1 && <Destination />}
 					{path === 2 && <Crew />}
 					{path === 3 && <Technology />}
-				</Column>
+				</Container>
 			</BackGround>
 		</>
 	);

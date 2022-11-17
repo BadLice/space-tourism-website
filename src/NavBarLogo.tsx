@@ -13,6 +13,11 @@ const LogoContainer = styled.div`
 		width: 33%;
 		padding-left: 5%;
 	}
+
+	@media only screen and (max-width: 375px) {
+		width: 90%;
+		padding-left: 5%;
+	}
 `;
 
 const LogoWrapper = styled.div`
@@ -22,6 +27,10 @@ const LogoWrapper = styled.div`
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
+
+	@media only screen and (max-width: 375px) {
+		width: 30%;
+	}
 `;
 
 const Logo = styled.div`
@@ -41,7 +50,7 @@ const Line = styled.div`
 	opacity: 0.25;
 	z-index: 10;
 
-	@media only screen and (max-width: 768px) and (min-width: 376px) {
+	@media only screen and (max-width: 768px) {
 		display: none;
 	}
 `;
