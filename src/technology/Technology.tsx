@@ -7,13 +7,33 @@ import { useState } from 'react';
 import Slider from 'Slider';
 import styled from 'styled-components';
 import { Body, H3, Nav1 } from 'Typography';
+import useMediaQuery from 'useMediaQuery';
 
-const Row = styled.div`
+const Container = styled.div`
+	display: flex;
+	flex-direction: column;
+	/* align-items: center; */
+	height: 85%;
+	/* padding-top: 5%; */
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		flex-direction: column;
+		align-items: flex-start;
+		width: 100%;
+		padding-top: 0;
+	}
+`;
+
+const Wrapper = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	height: 85%;
-	padding-top: 5%;
+	height: 100%;
+	width: 100%;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		flex-direction: column;
+	}
 `;
 
 const PartContainer = styled.div`
@@ -23,6 +43,11 @@ const PartContainer = styled.div`
 	height: 100%;
 	padding-bottom: 0%;
 	padding-top: 0%;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		height: 50%;
+		width: 100%;
+	}
 `;
 
 const ImageContainer = styled(FadeContainer)`
@@ -40,19 +65,38 @@ const Image = styled(FadeImage)`
 
 const InformationContainer = styled.div`
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	width: 70%;
 	height: 100%;
 	padding-bottom: 10%;
+	padding-top: 8%;
 	padding-left: 12%;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		flex-direction: column;
+		height: 50%;
+		width: 100%;
+		padding-bottom: 0;
+		padding-left: 0;
+		padding-top: 0;
+		align-items: center;
+		order: 2;
+	}
 `;
+
 const SliderContianer = styled.div`
 	display: flex;
 	flex-direction: row;
-	width: 100%;
+	width: 20%;
 	height: 100%;
 	padding-top: 10%;
 	gap: 10%;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		width: 100%;
+		height: 30%;
+		padding-top: 0%;
+	}
 `;
 
 const TextContianer = styled.div<{ $show: boolean }>`
@@ -61,19 +105,35 @@ const TextContianer = styled.div<{ $show: boolean }>`
 	animation: ${showSlideLeft} 1s ease-in-out, ${fadeIn} 1s ease-in-out;
 	width: 70%;
 	height: 100%;
-	padding-top: 3%;
+	padding-top: 13%;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		align-items: center;
+		padding-top: 3%;
+	}
 `;
 
 const Role = styled(Nav1)`
 	text-transform: uppercase;
 	height: 7%;
 	color: #d0d6f9;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		text-align: center;
+		height: 10%;
+	}
 `;
 
 const Name = styled(H3)`
 	text-transform: uppercase;
 	height: 15%;
 	width: 100%;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		text-align: center;
+		font-size: 40px;
+		line-height: 46px;
+	}
 `;
 
 const Description = styled(Body)`
@@ -81,27 +141,60 @@ const Description = styled(Body)`
 	height: 50%;
 	width: 93%;
 	color: #d0d6f9;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		text-align: center;
+		font-size: 16px;
+		line-height: 28px;
+	}
+`;
+
+const InitContainer = styled.div`
+	display: flex;
+	height: 6%;
+	padding-top: 5%;
+	padding-left: 12%;
+	width: 50%;
+
+	& > * > * {
+		height: 100%;
+	}
+
+	& > * {
+		height: 100%;
+	}
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		width: 100%;
+		padding-top: 3%;
+		padding-left: 0;
+	}
 `;
 
 const Technology = () => {
 	const [autoAdvance, setAutoAdvance] = useState(true);
 	const [selected, setSelected] = useState(0);
+	const isTablet = useMediaQuery('(max-width: 768px)');
 	const { technology } = data;
 
 	return (
-		<Row>
-			<InformationContainer>
+		<Container>
+			<InitContainer>
 				<Init index='03' text='space launch 101' />
-				<SliderContianer>
-					<Slider
-						orientation='vertical'
-						size='big'
-						elements={3}
-						selected={selected}
-						setSelected={setSelected}
-						autoAdvance={autoAdvance}
-						setAutoAdvance={setAutoAdvance}
-					/>
+			</InitContainer>
+			<Wrapper>
+				<InformationContainer>
+					<SliderContianer>
+						<Slider
+							orientation={isTablet ? 'horizontal' : 'vertical'}
+							size='big'
+							elements={3}
+							selected={selected}
+							setSelected={setSelected}
+							autoAdvance={autoAdvance}
+							setAutoAdvance={setAutoAdvance}
+						/>
+					</SliderContianer>
 					{technology.map((part, i) => (
 						<TextContianer
 							key={i}
@@ -114,16 +207,18 @@ const Technology = () => {
 							<Description>{part.description}</Description>
 						</TextContianer>
 					))}
-				</SliderContianer>
-			</InformationContainer>
-			<PartContainer>
-				{technology.map((part, i) => (
-					<ImageContainer key={i} $show={i === selected}>
-						<Image $url={part.images.portrait} />
-					</ImageContainer>
-				))}
-			</PartContainer>
-		</Row>
+				</InformationContainer>
+				<PartContainer>
+					{technology.map((part, i) => (
+						<ImageContainer key={i} $show={i === selected}>
+							<Image
+								$url={isTablet ? part.images.landscape : part.images.portrait}
+							/>
+						</ImageContainer>
+					))}
+				</PartContainer>
+			</Wrapper>
+		</Container>
 	);
 };
 

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { H4 } from 'Typography';
 
 type SliderProps = {
@@ -12,7 +12,7 @@ type SliderProps = {
 	size: 'small' | 'big';
 };
 
-const List = styled.ul<{ $orientation: string }>`
+const List = styled.ul<{ $orientation: string; $size: string }>`
 	width: ${({ $orientation }) => ($orientation === 'vertical' ? 'unset' : '100%')};
 	height: ${({ $orientation }) => ($orientation === 'vertical' ? '100%' : 'unset')};
 	display: flex;
@@ -20,10 +20,20 @@ const List = styled.ul<{ $orientation: string }>`
 	padding-left: 0%;
 	list-style: none;
 
-	@media only screen and (max-width: 768px) and (min-width: 376px) {
-		align-items: center;
-		justify-content: center;
-	}
+	${({ $size }) =>
+		$size === 'small'
+			? css`
+					@media only screen and (max-width: 768px) and (min-width: 376px) {
+						align-items: center;
+						justify-content: center;
+					}
+			  `
+			: css`
+					@media only screen and (max-width: 768px) and (min-width: 376px) {
+						justify-content: center;
+						gap: 3%;
+					}
+			  `}
 `;
 
 const ItemSmall = styled.li<{ $active: boolean }>`
@@ -54,6 +64,10 @@ const Index = styled(H4)`
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -16px);
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		transform: translate(-50%, -12px);
+	}
 `;
 
 const ItemBig = styled.li<{ $active: boolean }>`
@@ -74,6 +88,19 @@ const ItemBig = styled.li<{ $active: boolean }>`
 
 	& > ${Index} {
 		color: ${({ $active }) => ($active ? '#0B0D17' : '#FFFFFF')};
+	}
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		margin-right: 0;
+		margin-bottom: 0;
+		width: 58px;
+		height: 58px;
+
+		& > ${Index} {
+			font-size: 24px;
+			line-height: 28px;
+			text-align: center;
+		}
 	}
 `;
 
@@ -104,7 +131,7 @@ const Slider = ({
 
 	return (
 		<>
-			<List $orientation={orientation}>
+			<List $orientation={orientation} $size={size}>
 				{Array.from({ length: elements }).map((_, id) => (
 					<React.Fragment key={id}>
 						{(() => {
