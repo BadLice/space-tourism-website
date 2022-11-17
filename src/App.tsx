@@ -56,6 +56,12 @@ const Column = styled.main`
 
 //TODO: responsive
 
+//TODO: fix indicator for tablet and mobile
+
+//TODO: fix tabs text color and fint
+
+//TODO: preload planets images
+
 const App = () => {
 	const [path, setPath] = useState(Number(sessionStorage.getItem('path')) || 0);
 	const isTablet = useMediaQuery('(max-width: 768px)');
