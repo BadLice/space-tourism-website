@@ -17,7 +17,6 @@ const Container = styled.div`
 
 	@media only screen and (max-width: 768px) and (min-width: 376px) {
 		flex-direction: column;
-		height: 85%;
 		justify-content: center;
 		padding-top: 3%;
 	}
