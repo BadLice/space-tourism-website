@@ -19,6 +19,11 @@ const List = styled.ul<{ $orientation: string }>`
 	flex-direction: ${({ $orientation }) => ($orientation === 'vertical' ? 'column' : 'row')};
 	padding-left: 0%;
 	list-style: none;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		align-items: center;
+		justify-content: center;
+	}
 `;
 
 const ItemSmall = styled.li<{ $active: boolean }>`
@@ -35,6 +40,10 @@ const ItemSmall = styled.li<{ $active: boolean }>`
 	&:hover {
 		mix-blend-mode: normal;
 		opacity: 0.5;
+	}
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		margin-right: 3%;
 	}
 `;
 
