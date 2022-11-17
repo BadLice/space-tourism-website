@@ -1,3 +1,4 @@
+import { getBackgroundsList, getCurrentBackground } from 'backgrounds';
 import Crew from 'crew/Crew';
 import Destination from 'destination/Destination';
 import Home from 'home/Home';
@@ -5,13 +6,7 @@ import NavBar from 'NavBar';
 import { useEffect, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import Technology from 'technology/Technology';
-
-const backgrounds = [
-	'./assets/home/background-home-desktop.jpg',
-	'./assets/destination/background-destination-desktop.jpg',
-	'./assets/crew/background-crew-desktop.jpg',
-	'./assets/technology/background-technology-desktop.jpg',
-];
+import useMediaQuery from 'useMediaQuery';
 
 const GlobalStyle = createGlobalStyle<{ $imgUrls: Array<string> }>`
   * {
@@ -30,7 +25,15 @@ const GlobalStyle = createGlobalStyle<{ $imgUrls: Array<string> }>`
   body::after{
    position:absolute; width:0; height:0; overflow:hidden; z-index:-1; // hide images
    content:${({ $imgUrls }) =>
-		$imgUrls.map((path) => `url(${path})`).join(' ')};   // load images
+		$imgUrls
+			.map(
+				(path) =>
+					`url(${path.replace('<screen>', 'tablet')}) url(${path.replace(
+						'<screen>',
+						'desktop'
+					)}) url(${path.replace('<screen>', 'mobile')})`
+			)
+			.join(' ')};   // load images
 }
 `;
 
@@ -55,6 +58,7 @@ const Column = styled.main`
 
 const App = () => {
 	const [path, setPath] = useState(Number(sessionStorage.getItem('path')) || 0);
+	const isTablet = useMediaQuery('(max-width: 768px)');
 
 	useEffect(() => {
 		sessionStorage.setItem('path', '' + path);
@@ -62,8 +66,8 @@ const App = () => {
 
 	return (
 		<>
-			<GlobalStyle $imgUrls={backgrounds} />
-			<BackGround $url={backgrounds[path]}>
+			<GlobalStyle $imgUrls={getBackgroundsList()} />
+			<BackGround $url={getCurrentBackground(path, isTablet)}>
 				<Column>
 					<NavBar path={path} setPath={setPath} />
 					{path === 0 && <Home setPath={setPath} />}
