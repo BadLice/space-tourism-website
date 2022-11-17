@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Nav1 } from 'Typography';
+import useMediaQuery from 'useMediaQuery';
 
 type TabsProps = {
 	data: Array<{ label: string }>;
@@ -11,6 +12,7 @@ type TabsProps = {
 type IndicatorProps = {
 	$currentPath: number;
 	$previousPath: number;
+	$size: number;
 };
 
 const List = styled.ul`
@@ -20,6 +22,11 @@ const List = styled.ul`
 	justify-content: left;
 	align-items: center;
 	padding-left: 5%;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		justify-content: center;
+		padding-left: 0;
+	}
 `;
 
 const Item = styled.li`
@@ -40,20 +47,24 @@ const IndicatorContainer = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: left;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		justify-content: center;
+	}
 `;
 
-const slide = ({ $currentPath, $previousPath }: IndicatorProps) => keyframes`
+const slide = ({ $currentPath, $previousPath, $size }: IndicatorProps) => keyframes`
 	0%{
-		margin-left: ${$previousPath * 17}%; 
+		margin-left: ${$previousPath * $size}%; 
 	}
 	70% {
-		margin-left: ${$currentPath * 17 + ($previousPath > $currentPath ? -1 : 1)}%; 
+		margin-left: ${$currentPath * $size + ($previousPath > $currentPath ? -1 : 1)}%; 
 	}
 	90% {
-		margin-left: ${$currentPath * 17 + ($previousPath > $currentPath ? 1 : -1)}%; 
+		margin-left: ${$currentPath * $size + ($previousPath > $currentPath ? 1 : -1)}%; 
 	}
 	100%  {
-		margin-left: ${$currentPath * 17}%; 
+		margin-left: ${$currentPath * $size}%; 
 	}
 `;
 
@@ -61,8 +72,8 @@ const Indicator = styled.div<IndicatorProps>`
 	border-radius: 2px;
 	height: 4px;
 	background-color: white;
-	width: 17%;
-	margin-left: ${({ $currentPath }) => $currentPath * 17}%;
+	width: ${({ $size }) => $size}%;
+	margin-left: ${({ $currentPath, $size }) => $currentPath * $size}%;
 	animation: ${(props) => slide(props)} 0.2s ease-in;
 `;
 
@@ -74,8 +85,22 @@ const NavButton = styled.a`
 	align-items: center;
 `;
 
+const Text = styled(Nav1)`
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 19px;
+		letter-spacing: 2.7px;
+		color: #ffffff;
+	}
+`;
+
 const Tabs = ({ data, selected, setSelected }: TabsProps) => {
 	const [previousSelected, setPreviousSelected] = useState(0);
+
+	const isTablet = useMediaQuery('(max-width: 768px)');
+
+	let indicatorSize = isTablet ? 13 : 17;
 
 	const handleClickNav = (e: React.MouseEvent<HTMLLIElement, MouseEvent>, p: number) => {
 		e.preventDefault();
@@ -89,13 +114,17 @@ const Tabs = ({ data, selected, setSelected }: TabsProps) => {
 				{data.map(({ label }, id) => (
 					<Item key={id} onClick={(e) => handleClickNav(e, id)}>
 						<NavButton href='/'>
-							<Nav1>{label}</Nav1>
+							<Text>{label}</Text>
 						</NavButton>
 					</Item>
 				))}
 			</List>
 			<IndicatorContainer>
-				<Indicator $currentPath={selected} $previousPath={previousSelected} />
+				<Indicator
+					$currentPath={selected}
+					$previousPath={previousSelected}
+					$size={indicatorSize}
+				/>
 			</IndicatorContainer>
 		</>
 	);

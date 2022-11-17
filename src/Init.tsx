@@ -13,6 +13,12 @@ const Container = styled.div`
 const Text = styled(H5)`
 	width: 90%;
 	text-transform: uppercase;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		font-size: 20px;
+		line-height: 24px;
+		letter-spacing: 3.375px;
+	}
 `;
 
 const Index = styled(H5)`
@@ -21,6 +27,13 @@ const Index = styled(H5)`
 	mix-blend-mode: normal;
 	opacity: 0.25;
 	font-weight: 700;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		padding-left: 5%;
+		font-size: 20px;
+		line-height: 24px;
+		letter-spacing: 3.375px;
+	}
 `;
 
 type InitProps = {

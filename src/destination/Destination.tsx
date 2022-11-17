@@ -1,4 +1,4 @@
-import { fadeIn, showSlideLeft } from 'animations';
+import { fadeIn, showSlideLeft, showSlideTop } from 'animations';
 import data from 'data/data.json';
 import FadeContainer from 'FadeContainer';
 import FadeImage from 'FadeImage';
@@ -8,12 +8,19 @@ import styled from 'styled-components';
 import { Body, H2, S1, S2 } from 'Typography';
 import Tabs from './Tabs';
 
-const Row = styled.div`
+const Container = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	height: 85%;
 	padding-top: 5%;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		flex-direction: column;
+		height: 85%;
+		justify-content: center;
+		padding-top: 3%;
+	}
 `;
 
 const PlanetContainer = styled.div`
@@ -25,6 +32,15 @@ const PlanetContainer = styled.div`
 	align-items: flex-end;
 	padding-bottom: 10%;
 	padding-left: 12%;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		width: 100%;
+		height: 50%;
+		align-items: center;
+		justify-content: center;
+		padding-left: 0;
+		padding-bottom: 0;
+	}
 `;
 
 const ImageContainer = styled.div`
@@ -33,6 +49,11 @@ const ImageContainer = styled.div`
 	display: flex;
 	flex-direction: row;
 	animation: ${showSlideLeft} 1s ease-in-out, ${fadeIn} 1s ease-in-out;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		justify-content: center;
+		animation: ${showSlideTop} 1s ease-in-out, ${fadeIn} 1s ease-in-out;
+	}
 `;
 
 const Image = styled(FadeImage)`
@@ -40,6 +61,11 @@ const Image = styled(FadeImage)`
 	height: auto;
 	max-width: 455px;
 	max-height: 455px;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		max-width: 300px;
+		max-height: 300px;
+	}
 `;
 
 const InformationContainer = styled.div`
@@ -52,6 +78,22 @@ const InformationContainer = styled.div`
 	padding-bottom: 10%;
 	padding-left: 12%;
 	padding-top: 5%;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		flex-direction: column;
+		width: 100%;
+		height: 50%;
+		align-items: center;
+		justify-content: center;
+		padding-left: 0;
+	}
+`;
+
+const TextContainer = styled(FadeContainer)`
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		justify-content: center;
+		align-items: center;
+	}
 `;
 
 const TabsContainer = styled.div`
@@ -63,12 +105,26 @@ const Name = styled(H2)`
 	text-transform: uppercase;
 	padding-top: 10%;
 	height: 35%;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		padding-top: 5%;
+		width: 100%;
+		font-weight: 400;
+		font-size: 80px;
+		line-height: 92px;
+		text-align: center;
+	}
 `;
 
 const Description = styled(Body)`
 	height: 35%;
 	width: 80%;
 	color: #d0d6f9;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		width: 85%;
+		text-align: center;
+	}
 `;
 
 const Divider = styled.div`
@@ -84,6 +140,11 @@ const DataContainer = styled.div`
 	grid-template-columns: auto auto;
 	padding-top: 3%;
 	row-gap: 20%;
+
+	@media only screen and (max-width: 768px) and (min-width: 376px) {
+		width: 80%;
+		text-align: center;
+	}
 `;
 
 const Legend = styled(S2)`
@@ -98,7 +159,7 @@ const Destination = () => {
 	const planet = destinations[selected];
 
 	return (
-		<Row>
+		<Container>
 			<PlanetContainer>
 				<Init index='01' text='pick your destination' />
 				<ImageContainer>
@@ -114,7 +175,7 @@ const Destination = () => {
 					/>
 				</TabsContainer>
 				{destinations.map((planet, i) => (
-					<FadeContainer key={i} $show={i === selected}>
+					<TextContainer key={i} $show={i === selected}>
 						<Name>{planet.name}</Name>
 						<Description>{planet.description}</Description>
 						<Divider />
@@ -124,10 +185,10 @@ const Destination = () => {
 							<Data>{planet.distance}</Data>
 							<Data>{planet.travel}</Data>
 						</DataContainer>
-					</FadeContainer>
+					</TextContainer>
 				))}
 			</InformationContainer>
-		</Row>
+		</Container>
 	);
 };
 
